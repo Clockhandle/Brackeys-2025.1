@@ -47,12 +47,12 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Mouse"",
-                    ""type"": ""Value"",
-                    ""id"": ""17b10c06-5e86-4c71-9f04-b657c1faf7bd"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": ""ScaleVector2(x=0.1,y=0.1),DeltaTimeScale"",
+                    ""type"": ""Button"",
+                    ""id"": ""36eafccf-2d16-4ae3-af12-224b5c830ca8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -124,11 +124,11 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""30dcb1b3-1de3-4516-8e89-5d18456c784b"",
-                    ""path"": ""<Pointer>/delta"",
+                    ""id"": ""34f733d8-5a7f-4e27-a460-14703bbd8cff"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
-                    ""processors"": ""ScaleVector2(x=0.1,y=0.1)"",
-                    ""groups"": ""Keyboard&Mouse"",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false

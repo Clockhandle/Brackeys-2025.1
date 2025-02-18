@@ -15,6 +15,7 @@ public class First_Person_Camera : MonoBehaviour
     private Vector2 _moveDirection;
     public InputActionReference moveAction;
     public InputActionReference mouseAction;
+    [SerializeField] private float interactRange = 5f;
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -41,5 +42,40 @@ public class First_Person_Camera : MonoBehaviour
         {
             playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
+
+        //ShootRay();
+
+    }
+
+    void ShootRay()
+    {
+        Ray ray = new Ray(transform.position, transform.forward); // Casts ray forward from player
+        Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, interactRange)) // If the ray hits something
+        {
+            if (hit.collider.TryGetComponent(out IInteractable interactable)) // Check for interface
+            {
+                interactable.Interact(); // Call Interact() method
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        mouseAction.action.started += Click;
+        mouseAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        mouseAction.action.started -= Click;
+        mouseAction.action.Disable();
+    }
+
+    private void Click(InputAction.CallbackContext context)
+    {
+        ShootRay();
     }
 }
