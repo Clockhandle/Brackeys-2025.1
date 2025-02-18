@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Mouse",
+                    "type": "Value",
+                    "id": "17b10c06-5e86-4c71-9f04-b657c1faf7bd",
+                    "expectedControlType": "Vector2",
+                    "processors": "ScaleVector2(x=0.1,y=0.1),DeltaTimeScale",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -90,14 +99,25 @@
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30dcb1b3-1de3-4516-8e89-5d18456c784b",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "ScaleVector2(x=0.1,y=0.1)",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Mouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
     ],
     "controlSchemes": [
         {
-            "name": "Keyboard",
-            "bindingGroup": "Keyboard",
+            "name": "Keyboard&Mouse",
+            "bindingGroup": "Keyboard&Mouse",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
