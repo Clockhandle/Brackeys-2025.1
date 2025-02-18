@@ -46,7 +46,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Mouse"",
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""36eafccf-2d16-4ae3-af12-224b5c830ca8"",
                     ""expectedControlType"": """",
@@ -125,11 +125,11 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""34f733d8-5a7f-4e27-a460-14703bbd8cff"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Mouse"",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -154,7 +154,7 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_Land = asset.FindActionMap("Land", throwIfNotFound: true);
         m_Land_Movement = m_Land.FindAction("Movement", throwIfNotFound: true);
         m_Land_Jump = m_Land.FindAction("Jump", throwIfNotFound: true);
-        m_Land_Mouse = m_Land.FindAction("Mouse", throwIfNotFound: true);
+        m_Land_Interact = m_Land.FindAction("Interact", throwIfNotFound: true);
     }
 
     ~@InputSystem()
@@ -223,14 +223,14 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private List<ILandActions> m_LandActionsCallbackInterfaces = new List<ILandActions>();
     private readonly InputAction m_Land_Movement;
     private readonly InputAction m_Land_Jump;
-    private readonly InputAction m_Land_Mouse;
+    private readonly InputAction m_Land_Interact;
     public struct LandActions
     {
         private @InputSystem m_Wrapper;
         public LandActions(@InputSystem wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Land_Movement;
         public InputAction @Jump => m_Wrapper.m_Land_Jump;
-        public InputAction @Mouse => m_Wrapper.m_Land_Mouse;
+        public InputAction @Interact => m_Wrapper.m_Land_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -246,9 +246,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Mouse.started += instance.OnMouse;
-            @Mouse.performed += instance.OnMouse;
-            @Mouse.canceled += instance.OnMouse;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(ILandActions instance)
@@ -259,9 +259,9 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Mouse.started -= instance.OnMouse;
-            @Mouse.performed -= instance.OnMouse;
-            @Mouse.canceled -= instance.OnMouse;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(ILandActions instance)
@@ -292,6 +292,6 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnMouse(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

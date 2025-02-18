@@ -29,9 +29,6 @@ public class Player_Movement : MonoBehaviour
     private Vector2 _moveInput;
     private Vector3 _moveDirection;
 
-    public InputActionReference moveAction;
-    public InputActionReference jumpAction;
-
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -40,7 +37,6 @@ public class Player_Movement : MonoBehaviour
     void Update()
     {
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        _moveInput = moveAction.action.ReadValue<Vector2>();
 
         SpeedControl();
         if (grounded)
@@ -53,21 +49,9 @@ public class Player_Movement : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    public void Jump(InputAction.CallbackContext context)
     {
-        jumpAction.action.started += Jump;
-        jumpAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        jumpAction.action.started -= Jump;
-        jumpAction.action.Disable();
-    }
-
-    private void Jump(InputAction.CallbackContext context)
-    {
-        if (grounded)
+        if (grounded && context.performed)
         {
             rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
@@ -79,6 +63,10 @@ public class Player_Movement : MonoBehaviour
         rb.linearVelocity = new Vector3(_moveDirection.x * _moveSpeed, rb.linearVelocity.y, _moveDirection.z * _moveSpeed);
     }
 
+    public void Moving(InputAction.CallbackContext context)
+    {
+        _moveInput = context.action.ReadValue<Vector2>();
+    }
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);

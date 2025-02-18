@@ -14,8 +14,8 @@ public class First_Person_Camera : MonoBehaviour
     [Header("InputAction")]
     private Vector2 _moveDirection;
     public InputActionReference moveAction;
-    public InputActionReference mouseAction;
     [SerializeField] private float interactRange = 5f;
+    private IInteractable currentInteractable; // Store the detected interactable
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -43,39 +43,38 @@ public class First_Person_Camera : MonoBehaviour
             playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
 
-        //ShootRay();
+        DetectInteractable();
 
     }
 
-    void ShootRay()
+    private void DetectInteractable()
     {
-        Ray ray = new Ray(transform.position, transform.forward); // Casts ray forward from player
-        Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red);
-        RaycastHit hit;
+        Ray ray = new Ray(transform.position, transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red, 0.1f);
 
-        if (Physics.Raycast(ray, out hit, interactRange)) // If the ray hits something
+        if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
         {
-            if (hit.collider.TryGetComponent(out IInteractable interactable)) // Check for interface
+            if (hit.collider.TryGetComponent(out IInteractable interactable))
             {
-                interactable.Interact(); // Call Interact() method
+                currentInteractable = interactable;
+                Debug.Log($"Interactable detected: {hit.collider.gameObject.name}");
             }
+            else
+            {
+                currentInteractable = null;
+            }    
+        }
+        else
+        {
+            currentInteractable = null; // Reset if no interactable is hit
         }
     }
 
-    private void OnEnable()
+    public void InteractibleDetected(InputAction.CallbackContext context)
     {
-        mouseAction.action.started += Click;
-        mouseAction.action.Enable();
-    }
-
-    private void OnDisable()
-    {
-        mouseAction.action.started -= Click;
-        mouseAction.action.Disable();
-    }
-
-    private void Click(InputAction.CallbackContext context)
-    {
-        ShootRay();
+        if(currentInteractable != null && context.performed)
+        {
+            currentInteractable.Interact();
+        }
     }
 }

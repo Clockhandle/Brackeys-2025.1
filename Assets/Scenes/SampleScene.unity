@@ -363,7 +363,6 @@ MonoBehaviour:
   rb: {fileID: 1093475273}
   rotationSpeed: 7
   moveAction: {fileID: 7791844624656538652, guid: 5bf0ab9a23c9c2249936420c8ef22b3e, type: 3}
-  mouseAction: {fileID: 4406084383619922563, guid: 5bf0ab9a23c9c2249936420c8ef22b3e, type: 3}
   interactRange: 5
 --- !u!1 &410087039
 GameObject:
@@ -1005,7 +1004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 5bf0ab9a23c9c2249936420c8ef22b3e, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -1027,20 +1026,20 @@ MonoBehaviour:
     m_ActionName: 'Land/Jump[/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 330585549}
+        m_TargetAssemblyTypeName: First_Person_Camera, Assembly-CSharp
+        m_MethodName: InteractibleDetected
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 17b10c06-5e86-4c71-9f04-b657c1faf7bd
-    m_ActionName: 'Land/Mouse[/Mouse/delta]'
+    m_ActionId: 36eafccf-2d16-4ae3-af12-224b5c830ca8
+    m_ActionName: 'Land/Interact[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Land
