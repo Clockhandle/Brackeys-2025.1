@@ -1017,11 +1017,35 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1093475275}
+        m_TargetAssemblyTypeName: Player_Movement, Assembly-CSharp
+        m_MethodName: Moving
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d7ba5918-1d25-4dc7-ac9d-5714ed9fd27a
     m_ActionName: 'Land/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1093475275}
+        m_TargetAssemblyTypeName: Player_Movement, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 89fd638e-17f0-4db7-b08b-300e04d20fc6
     m_ActionName: 'Land/Jump[/Keyboard/space]'
   - m_PersistentCalls:
@@ -1067,8 +1091,6 @@ MonoBehaviour:
   _moveSpeed: 7
   groundDrag: 0.1
   _jumpForce: 5
-  moveAction: {fileID: 7791844624656538652, guid: 5bf0ab9a23c9c2249936420c8ef22b3e, type: 3}
-  jumpAction: {fileID: -6796368469318511494, guid: 5bf0ab9a23c9c2249936420c8ef22b3e, type: 3}
 --- !u!1 &1282301461
 GameObject:
   m_ObjectHideFlags: 0
