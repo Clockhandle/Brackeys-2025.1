@@ -77,4 +77,9 @@ public class First_Person_Camera : MonoBehaviour
             currentInteractable.Interact();
         }
     }
+
+    public void Look(InputAction.CallbackContext context)
+    {
+        Debug.Log(context.ReadValue<Vector2>());
+    }
 }
