@@ -5,60 +5,39 @@ using UnityEngine.UI;
 
 public class Save_Setting : MonoBehaviour
 {
-    public Slider music_slider;
-    public Slider soundeffect_slider;
-    public Slider brightness_slider;
-    public Toggle isFullScreenToggle;
-
-    AudioMixer audioMixer;
-
-
-
-
+    public AudioMixer audioMixer;
+    
+    public Slider musicSlider;
+    private bool isFullScreenvalue;
 
     private void Start()
     {
         
-    }
-
-    private void Update()
-    {
-
-        PlayerPrefs.SetFloat("SoundEffect", soundeffect_slider.value);
-        PlayerPrefs.SetFloat("Music", music_slider.value);
-        PlayerPrefs.SetFloat("Brightness", brightness_slider.value);
-        PlayerPrefs.SetFloat("isFullScreen", isFullScreenToggle.isOn ? 1 : 0);
-
-    }
-
-    public void SaveSetting(float Soundeffecct, float music, float brightness,bool isFullscreen)
-    {
-        music_slider.value =music;
-        soundeffect_slider.value =Soundeffecct;
-        brightness_slider.value =brightness;    
-        isFullScreenToggle.isOn  = isFullscreen;
-
-    }
-
-    public void LoadSetting(float Soundeffecct, float music, float brightness, bool isFullscreen)
-    {
+            musicSlider.value = PlayerPrefs.GetFloat("volume");
+            audioMixer.SetFloat("volume", volumeValue);
+        
        
-
-
     }
-    private void SetSoundEffect(float volume)
+
+    public void SaveData()
     {
+        audioMixer.SetFloat("volume", volumeValue);
+        PlayerPrefs.SetFloat("volume", volumeValue);
+        Screen.fullScreen = isFullScreenvalue;
         
     }
-    private void SetMusic(float volume)
+
+    private float volumeValue =0;
+    public void SetVolume(float volume)
+
     {
-        
+       volumeValue = volume;    
     }
-    private void Setbrightness(float volume)
+
+    public void SetFullScreen(bool isFullScreen)
     {
-
+       isFullScreenvalue = isFullScreen;
     }
-
-
+    
 
 }

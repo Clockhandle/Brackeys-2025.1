@@ -12,6 +12,11 @@ public class Menu_Management : MonoBehaviour
         Invoke(nameof(LoadSceneDelay), 1f);
 
     }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
     string currentSceneName;
     private void LoadSceneDelay()
     {
