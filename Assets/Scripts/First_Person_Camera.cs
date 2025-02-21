@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class First_Person_Camera : MonoBehaviour
 {
@@ -15,15 +16,27 @@ public class First_Person_Camera : MonoBehaviour
     private Vector2 _moveDirection;
     public InputActionReference moveAction;
     [SerializeField] private float interactRange = 5f;
+    [SerializeField] private TMP_Text interactionText;
     private IInteractable currentInteractable; // Store the detected interactable
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = true;
+        interactionText.gameObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()
     {
+
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+           
+        //    Cursor.lockState = CursorLockMode.None;
+        //    Cursor.visible = true;
+        //}
+
+
+
         // Get the forward direction from the camera (since this script is on the camera)
         Vector3 viewDir = new Vector3(transform.forward.x, 0, transform.forward.z).normalized;
 
@@ -45,8 +58,55 @@ public class First_Person_Camera : MonoBehaviour
 
         DetectInteractable();
 
-    }
+        if (currentInteractable == null && currentDialogueTrigger == null)
+            return;
 
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (currentDialogueTrigger != null)
+            {
+                currentDialogueTrigger.TriggerDialogue();
+            }
+            else if (currentInteractable != null)
+            {
+                currentInteractable.Interact();
+            }
+        }
+
+    }
+    private DialogueTrigger currentDialogueTrigger;
+    //private void DetectInteractable()
+    //{
+    //    Ray ray = new Ray(transform.position, transform.forward);
+    //    Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.red, 0.1f);
+
+    //    if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
+    //    {
+    //        if (hit.collider.TryGetComponent(out IInteractable interactable))
+    //        {
+    //            currentInteractable = interactable;
+    //        }
+    //        else
+    //        {
+    //            currentInteractable = null;
+    //        }
+
+    //        // If the object has a DialogueTrigger, trigger dialogue
+    //        if (hit.collider.TryGetComponent(out DialogueTrigger dialogueTrigger))
+    //        {
+    //            dialogueTrigger.TriggerDialogue();
+    //        }
+    //        else
+    //        {
+    //            currentDialogueTrigger = null;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        currentInteractable = null;
+    //        currentDialogueTrigger = null;
+    //    }
+    //}
     private void DetectInteractable()
     {
         Ray ray = new Ray(transform.position, transform.forward);
@@ -54,21 +114,18 @@ public class First_Person_Camera : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactRange))
         {
-            if (hit.collider.TryGetComponent(out IInteractable interactable))
+            if (hit.collider.TryGetComponent(out DialogueTrigger dialogueTrigger))
             {
-                currentInteractable = interactable;
-                Debug.Log($"Interactable detected: {hit.collider.gameObject.name}");
+                currentDialogueTrigger = dialogueTrigger;
+                interactionText.gameObject.SetActive(true); // Show "Press I to interact"
+                return;
             }
-            else
-            {
-                currentInteractable = null;
-            }    
         }
-        else
-        {
-            currentInteractable = null; // Reset if no interactable is hit
-        }
+
+        currentDialogueTrigger = null;
+        interactionText.gameObject.SetActive(false); 
     }
+
 
     public void InteractibleDetected(InputAction.CallbackContext context)
     {
