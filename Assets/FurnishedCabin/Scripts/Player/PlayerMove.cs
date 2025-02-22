@@ -20,7 +20,10 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        PlayerMovement();
+        if (PlayerState.IsMoving)
+        {
+            PlayerMovement();
+        }
     }
 
     public void OnMovementInput(InputAction.CallbackContext context)

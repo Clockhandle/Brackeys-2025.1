@@ -47,7 +47,10 @@ public class PlayerLook : MonoBehaviour
 
     private void Update()
     {
-        CameraRotation();
+        if (PlayerState.IsLooking)
+        {
+            CameraRotation();
+        }
     }
 
     private void CameraRotation()

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class StartDoorEvent : MonoBehaviour
 {
-    private static int count = 0;
+    public static int count = 0;
     private static bool isSpecialObject;
 
     public MoveObjectController controller;

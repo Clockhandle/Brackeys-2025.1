@@ -65,9 +65,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {
         isDialogueActive = false;
-        dialogueBox?.SetActive (false);
+        dialogueBox?.SetActive(false);
     }
 }
