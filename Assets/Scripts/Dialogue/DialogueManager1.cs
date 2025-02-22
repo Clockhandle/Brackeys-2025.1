@@ -2,9 +2,9 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager1 : MonoBehaviour
 {
-    public static DialogueManager Instance;
+    public static DialogueManager1 Instance;
 
     [SerializeField] private GameObject dialoguePanel; // UI Panel
     [SerializeField] private TMP_Text dialogueText; // TextMeshPro text
