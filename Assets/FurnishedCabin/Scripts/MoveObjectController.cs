@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
+using System;
 
 public class MoveObjectController : MonoBehaviour 
 {
@@ -16,7 +18,9 @@ public class MoveObjectController : MonoBehaviour
 	private GUIStyle guiStyle;
 	private string msg;
 
-	private int rayLayerMask; 
+	[SerializeField] private bool isSpecialObject;
+	private int rayLayerMask;
+
 
 
 	void Start()
@@ -39,7 +43,7 @@ public class MoveObjectController : MonoBehaviour
 		rayLayerMask = 1 << iRayLM.value;  
 
 		//setup GUI style settings for user prompts
-		setupGui();
+		SetupGui();
 
 	}
 		
@@ -78,7 +82,7 @@ public class MoveObjectController : MonoBehaviour
 			{
 				MoveableObject moveableObject = null;
 				//is the object of the collider player is looking at the same as me?
-				if (!isEqualToParent(hit.collider, out moveableObject))
+				if (!IsEqualToParent(hit.collider, out moveableObject))
 				{	//it's not so return;
 					return;
 				}
@@ -89,13 +93,21 @@ public class MoveObjectController : MonoBehaviour
 					string animBoolNameNum = animBoolName + moveableObject.objectNumber.ToString();
 
 					bool isOpen = anim.GetBool(animBoolNameNum);	//need current state for message.
-					msg = getGuiMsg(isOpen);
+					msg = GetGuiMsg(isOpen);
 
 					if (Input.GetKeyUp(KeyCode.E) || Input.GetButtonDown("Fire1"))
 					{
-						anim.enabled = true;
-						anim.SetBool(animBoolNameNum,!isOpen);
-						msg = getGuiMsg(!isOpen);
+						if (isSpecialObject)
+						{
+							isSpecialObject = StartDoorEvent.OpenDoor();
+							msg = GetGuiMsg(!isOpen);
+						}
+						else
+						{
+							anim.enabled = true;
+							anim.SetBool(animBoolNameNum, !isOpen);
+							msg = GetGuiMsg(!isOpen);
+						}
 					}
 
 				}
@@ -109,7 +121,7 @@ public class MoveObjectController : MonoBehaviour
 	}
 
 	//is current gameObject equal to the gameObject of other.  check its parents
-	private bool isEqualToParent(Collider other, out MoveableObject draw)
+	private bool IsEqualToParent(Collider other, out MoveableObject draw)
 	{
 		draw = null;
 		bool rtnVal = false;
@@ -148,24 +160,26 @@ public class MoveObjectController : MonoBehaviour
 	#region GUI Config
 
 	//configure the style of the GUI
-	private void setupGui()
+	private void SetupGui()
 	{
-		guiStyle = new GUIStyle();
-		guiStyle.fontSize = 16;
-		guiStyle.fontStyle = FontStyle.Bold;
-		guiStyle.normal.textColor = Color.white;
+        guiStyle = new GUIStyle
+        {
+            fontSize = 16,
+            fontStyle = FontStyle.Bold
+        };
+        guiStyle.normal.textColor = Color.white;
 		msg = "Press E/Fire1 to Open";
 	}
 
-	private string getGuiMsg(bool isOpen)
+	private string GetGuiMsg(bool isOpen)
 	{
 		string rtnVal;
 		if (isOpen)
 		{
-			rtnVal = "Press E/Fire1 to Close";
+			rtnVal = "Press E/Left Click";
 		}else
 		{
-			rtnVal = "Press E/Fire1 to Open";
+			rtnVal = "Press E/Left Click";
 		}
 
 		return rtnVal;

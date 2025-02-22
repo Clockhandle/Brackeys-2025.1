@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private string horizontalInputName = "Horizontal";
-    [SerializeField] private string verticalInputName = "Vertical";
+    private Vector2 moveInput;
 
     [SerializeField] private float movementSpeed = 2f;
 
@@ -23,15 +23,17 @@ public class PlayerMove : MonoBehaviour
         PlayerMovement();
     }
 
+    public void OnMovementInput(InputAction.CallbackContext context)
+    {
+        moveInput = context.ReadValue<Vector2>();
+    }
+
     private void PlayerMovement()
     {
-        float vertInput = Input.GetAxis(verticalInputName) * movementSpeed;     //CharacterController.SimpleMove() applies deltaTime
-        float horizInput = Input.GetAxis(horizontalInputName) * movementSpeed;
-
-        Vector3 forwardMovement = transform.forward * vertInput;
-        Vector3 rightMovement = transform.right * horizInput;
+        Vector3 forwardMovement = moveInput.y * transform.forward;
+        Vector3 rightMovement = moveInput.x *  transform.right;
 
         //simple move applies delta time automatically
-        charController.SimpleMove(forwardMovement + rightMovement);
+        charController.SimpleMove((forwardMovement + rightMovement).normalized * movementSpeed);
     }
 }

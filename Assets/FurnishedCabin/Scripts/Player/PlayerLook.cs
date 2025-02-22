@@ -1,16 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerLook : MonoBehaviour
 {
-    [SerializeField] private string mouseXInputName = "Mouse X";
-    [SerializeField] private string mouseYInputName = "Mouse Y";
+    
     [SerializeField] private float mouseSensitivity = 150f;
 
     [SerializeField] private Transform playerBody;
     private float xAxisClamp;
     private bool m_cursorIsLocked = true;
+
+    private Vector2 mouseMovement;
 
     private void Awake()
     {
@@ -50,8 +52,8 @@ public class PlayerLook : MonoBehaviour
 
     private void CameraRotation()
     {
-        float mouseX = Input.GetAxis(mouseXInputName) * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis(mouseYInputName) * mouseSensitivity * Time.deltaTime;
+        float mouseX = mouseMovement.x * mouseSensitivity * Time.deltaTime;
+        float mouseY = mouseMovement.y * mouseSensitivity * Time.deltaTime;
 
         xAxisClamp += mouseY;
 
@@ -77,5 +79,10 @@ public class PlayerLook : MonoBehaviour
         Vector3 eulerRotation = transform.eulerAngles;
         eulerRotation.x = value;
         transform.eulerAngles = eulerRotation;
+    }
+
+    public void OnMouseLook(InputAction.CallbackContext context)
+    {
+        mouseMovement = context.ReadValue<Vector2>();
     }
 }
