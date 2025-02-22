@@ -1502,6 +1502,21 @@ MonoBehaviour:
   specialDialoge:
     dialogueLines:
     - line: Oops!
+  unityDialogueTriggerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 286599518}
+        m_TargetAssemblyTypeName: GameOver, Assembly-CSharp
+        m_MethodName: GameOverTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1471464434 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5192696395958253843, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
@@ -1609,6 +1624,9 @@ MonoBehaviour:
     - line: You take the key.
   specialDialoge:
     dialogueLines: []
+  unityDialogueTriggerEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1524741413
 GameObject:
   m_ObjectHideFlags: 0
