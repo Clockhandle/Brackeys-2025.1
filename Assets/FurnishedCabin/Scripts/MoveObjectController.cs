@@ -21,7 +21,8 @@ public class MoveObjectController : MonoBehaviour
 	[SerializeField] private bool isSpecialObject;
 	private int rayLayerMask;
 
-	public DialogueTrigger trigger;
+    public UnityEvent unityEvent;
+	public Func<bool> boolSpecialObjectEvent;
 
 
 	void Start()
@@ -100,8 +101,11 @@ public class MoveObjectController : MonoBehaviour
 					{
 						if (isSpecialObject)
 						{
-							isSpecialObject = StartDoorEvent.OpenDoor();
-							trigger.TriggerDialogue();
+							unityEvent?.Invoke();
+							if (boolSpecialObjectEvent != null)
+							{
+								isSpecialObject = boolSpecialObjectEvent.Invoke();
+							}
 							msg = GetGuiMsg(!isOpen);
 						}
 						else
