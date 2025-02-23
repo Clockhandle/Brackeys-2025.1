@@ -20,4 +20,9 @@ public class GameOver : MonoBehaviour
         PlayerState.IsMoving = true;
         PlayerState.HasKey = false;
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

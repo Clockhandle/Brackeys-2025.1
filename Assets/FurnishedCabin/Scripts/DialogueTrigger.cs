@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,6 +22,11 @@ public class DialogueTrigger : MonoBehaviour
     public Dialogue dialogue;
     public Dialogue specialDialoge;
     public UnityEvent unityDialogueTriggerEvent;
+    public UnityEvent TVDialogueTriggerEvent;
+    public List<GameObject> buttonsToActivate; // Assign buttons in Unity Inspector
+
+    public float activationDelay = 2f; // Time between button activations
+    private int dialogueCount = 0;
     public void TriggerDialogue()
     {
         if (DialogueManager.Instance.isDialogueActive)
@@ -60,5 +66,32 @@ public class DialogueTrigger : MonoBehaviour
         unityDialogueTriggerEvent?.Invoke();
     }
 
+    public void TVDialogue()
+    {
+        if (DialogueManager.Instance.isDialogueActive)
+        {
+            DialogueManager.Instance.DisplayNextDialogueLine();
+            dialogueCount++;
 
+            // After third dialogue interaction, start the button activation sequence
+            if (dialogueCount >= 2)
+            {
+                StartCoroutine(ActivateButtonsGradually());
+            }
+        }
+        else
+        {
+            TVDialogueTriggerEvent?.Invoke();
+            DialogueManager.Instance.StartDialogue(dialogue);
+        }
+    }
+
+    private IEnumerator ActivateButtonsGradually()
+    {
+        foreach (GameObject button in buttonsToActivate)
+        {
+            button.SetActive(true);
+            yield return new WaitForSeconds(activationDelay); // Delay before activating the next button
+        }
+    }
 }

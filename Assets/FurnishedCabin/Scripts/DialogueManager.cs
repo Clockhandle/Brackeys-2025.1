@@ -9,7 +9,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
 
     public TextMeshProUGUI dialogueArea;
-    public GameObject dialogueBox; //Add this to control visibility
+    public GameObject defaultDialogueBox; //Add this to control visibility
 
     private Queue<DialogueLine> lines;
 
@@ -23,13 +23,13 @@ public class DialogueManager : MonoBehaviour
             Instance = this;
 
         lines = new Queue<DialogueLine>();
-        dialogueBox.SetActive(false);
+        defaultDialogueBox.SetActive(false);
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
         isDialogueActive = true;
-        dialogueBox.SetActive (true);
+        defaultDialogueBox.SetActive (true);
         lines.Clear();
 
         foreach (DialogueLine dialogueLine in dialogue.dialogueLines)
@@ -68,6 +68,6 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         isDialogueActive = false;
-        dialogueBox?.SetActive(false);
+        defaultDialogueBox?.SetActive(false);
     }
 }
