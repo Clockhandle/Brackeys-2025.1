@@ -6,7 +6,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public class DialogueLine
 { 
-    [TextArea(3, 10)]
+    [TextArea(3, 20)]
     public string line;
 }
 

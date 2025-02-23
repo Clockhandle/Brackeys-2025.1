@@ -14,7 +14,7 @@ public class StartDoorEvent : MonoBehaviour
     }
     public static bool OpenDoor()
     {
-        if (count <= 8)
+        if (count <= 10)
         {
             isSpecialObject = true;
             count++;
